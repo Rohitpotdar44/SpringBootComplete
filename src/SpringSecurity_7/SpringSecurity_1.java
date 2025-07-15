@@ -310,9 +310,45 @@ basically we are storing that initial username and password entered by user in t
 
 
 
+    3) userDetailsService implementation to fetch user details.
+
+    now for the userDetailsService in the springboot we have userDetailsService interface
+
+    i.e
+    public interface UserDetailsService {
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+}
+        at it contains loadUserByUsername method so to use it's we have to create one class which implements this
+        let's say userDetailsServiceImpl class
+
+        now we have to write content in this for the user means if uer found the do what and if not then do what
+
+    see that class
 
 
 
+    4) A configuration SecurityConfig to integrate everything with Spring Security.
+
+        we have already made SecurityConfig class but in that we written all about endpoints and all
+        *** but nothing about user ***
+
+
+
+// ok now we are done with these four steps
+
+then also we are still left with the that endpoints problem like passing username in that header it self
+so to fix this issue we have to modify the controllers in the journal entry controller
+
+now before that we are able to see that in the user controller userService_14.saveEntry(userInDb); we are saving the user entry directly in the db
+ // it's service method
+ public void saveEntry(User_12 user12){          // service here uses save() method from the Repository
+        userRepository_13.save(user12);
+    }
+
+    so here the problem is we are saving here password asa it is without encrypting them
+
+    so for that purpose we have to do some modification
+    like we have to make one implementation of the password encoder and then update the saveEntry  method accordingly
 
 
 }
