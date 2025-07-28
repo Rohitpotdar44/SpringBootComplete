@@ -249,7 +249,7 @@ passwords (hashed) will be stored in
 MongoDB, and when a user tries to log in, the
 system should check the provided
 credentials against what's stored in the
-database.
+database.       ( which is done by configure method itself ) so springboot does it automatically
 
 
 now we are starting to work on our application that authenticate users based on their username and password
@@ -349,6 +349,41 @@ now before that we are able to see that in the user controller userService_14.sa
 
     so for that purpose we have to do some modification
     like we have to make one implementation of the password encoder and then update the saveEntry  method accordingly
+
+
+     *********************************************
+
+     ok then upto this we are stored user password in encrypted format and all right
+
+    now there is still one work is remaining that is that endpoints and that methods in the user and journal controller
+    that we have to modify
+
+    *******************
+    now first we are doing this for the user
+
+    so first change is there is getAllUsers() method in the userController we are removing for now
+    because we write it later in the admin  i.e
+     @GetMapping
+    public List<User_12> getAllUsers(){
+        return userService_14.getAllEntries();
+    }
+
+    now next there is
+     @PostMapping
+
+    public void addNewUser(@RequestBody User_12 myUser) {
+        userService_14.saveEntry( myUser);
+    }         now this should be public beacuse any one can create user and it not requires any type of auth
+
+    so move it in publicController so are renaming the existing healthCheck to the public controller
+
+    and then for the put method we are modifying it beacasue it should be authenticated and that endpoint should be modified for that
+
+
+
+    ok now to update that put method we are firstly removing that endpoint and then
+
+    now the concept here is in springboot the details of the authenticated user is managed and stored by SecurityContextHolder so we are making use of it
 
 
 }
